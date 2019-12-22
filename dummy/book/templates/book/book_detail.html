@@ -1,0 +1,27 @@
+{% extends "book/book_base.html" %}
+{% load ratings %}
+{% block content %}
+<div class="row">
+  <h1 style="font-size:3em">About {{ book.name }}</h1>
+</div>
+<div class="row">
+    <div class="col-md-5">
+      <img class="rounded" src="{{  user.profile.image.url}}" alt="{{book.name}} Main Page" height="250" width="250">
+    </div>
+    <div class="col-md-7" style="border:2px solid black; border-radius: 5px;">
+      <p style="font-size:3em;" >Information</p><br>
+              Genre :{% for gen in book.genre.all %}
+                        {{gen}} |
+                      {% endfor %}<br><br>
+              {% ratings book %}<br>
+              Author :
+							{% for auth in book.author.all %}
+								<a class="mr-6" href="{% url 'author-book' auth %}">{{auth}}</a> |
+						  	{% endfor %}<br>
+              Date Added: {{ book.date_added|date:"F d, Y" }}<br>
+							<p class="card-text">
+                <a href="{% url 'favorite' book.id %}"><i class="fas fa-bookmark"></i> </a>
+                <a href="{% url 'book-update' book.id %}"><i class="far fa-edit" ></i></a>
+            </p>
+    </div>
+{% endblock content %}
